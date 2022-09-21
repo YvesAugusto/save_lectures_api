@@ -1,8 +1,9 @@
 from fastapi import FastAPI, Path, Response, Body, Request, Depends, status
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
+from sys import stdout
 from cruds import save
-import schemas
+from schemas import lectures
 import logging
 
 logger = logging.getLogger('lectures')
@@ -20,8 +21,8 @@ app = FastAPI()
 
 @app.post('/api/v1/lectures/save', tags=['api/lectures'])
 async def save_lectures_on_json(
-    results: schemas.Results = Body(embed=True)
+    results: lectures.Results = Body(embed=True)
 ):
     results_to_json = jsonable_encoder(results)
-    valid, message, status_code = save.save_results_to_json(results_to_json, FILEPATH)
-    return JSONResponse(content={"message": message, "data": results_to_json}, status_code=status_code)
+    data, message, status_code = save.save_results_to_json(results_to_json, FILEPATH)
+    return JSONResponse(content={"message": message, "data": data}, status_code=status_code)
