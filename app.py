@@ -4,7 +4,7 @@ from fastapi.responses import JSONResponse
 from sys import stdout
 from cruds import save
 from schemas import lectures
-import logging
+import logging, time
 
 logger = logging.getLogger('lectures')
 logger.setLevel(logging.DEBUG)
@@ -25,4 +25,8 @@ async def save_lectures_on_json(
 ):
     results_to_json = jsonable_encoder(results)
     data, message, status_code = save.save_results_to_json(results_to_json, FILEPATH)
+    logger.info(
+        f"[{results.request_id}] status_code={status_code}"
+    )
+    save.log_results(logger, results, status_code)
     return JSONResponse(content={"message": message, "data": data}, status_code=status_code)
