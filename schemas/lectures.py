@@ -1,12 +1,13 @@
 from pydantic import BaseModel
+from typing import Optional
 
 class Lecture(BaseModel):
     content: str
     bounds: list[tuple[float, float]]
 
 class Results(BaseModel):
-    lectures: list[Lecture] | None
-    shape: tuple[int, int] | None
+    lectures: Optional[list[Lecture]] = None
+    shape: Optional[tuple[int, int]] = None
     message: str
     request_id: str
 
