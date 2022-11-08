@@ -10,6 +10,8 @@ class Results(BaseModel):
     shape: Optional[tuple[int, int]] = None
     message: str
     request_id: str
+    ip: str
+    port: int
 
     class Config:
         schema_extra = {
@@ -26,5 +28,7 @@ class Results(BaseModel):
                 "request_id": "7DJ0PKWPFD979YMZ",
                 "message": "Sucesso",
                 "shape": (3800, 2100),
+                "ip": "192.168.100.21",
+                "port": 8000
             }
         }
